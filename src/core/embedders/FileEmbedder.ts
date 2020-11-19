@@ -2,12 +2,14 @@ import PDFString from 'src/core/objects/PDFString';
 import PDFHexString from 'src/core/objects/PDFHexString';
 import PDFContext from 'src/core/PDFContext';
 import PDFRef from 'src/core/objects/PDFRef';
+import {LiteralObject} from 'src/core/PDFContext'
 
 export interface EmbeddedFileOptions {
   mimeType?: string;
   description?: string;
   creationDate?: Date;
   modificationDate?: Date;
+  additionalParams?: LiteralObject;
 }
 
 class FileEmbedder {
@@ -39,6 +41,7 @@ class FileEmbedder {
       description,
       creationDate,
       modificationDate,
+      additionalParams,
     } = this.options;
 
     const embeddedFileStream = context.flateStream(this.fileData, {
@@ -62,6 +65,7 @@ class FileEmbedder {
       UF: PDFHexString.fromText(this.fileName),
       EF: { F: embeddedFileStreamRef },
       Desc: description ? PDFHexString.fromText(description) : undefined,
+      ...additionalParams
     });
 
     if (ref) {
