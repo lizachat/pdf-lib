@@ -65,7 +65,6 @@ import  {AFRelationship} from 'src/core/embedders/FileEmbedder';
 import PDFEmbeddedFile from 'src/api/PDFEmbeddedFile';
 import PDFJavaScript from 'src/api/PDFJavaScript';
 import JavaScriptEmbedder from 'src/core/embedders/JavaScriptEmbedder';
-import { import } from 'mixpanel';
 
 /**
  * Represents a PDF document.
