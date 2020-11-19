@@ -3,13 +3,7 @@ import PDFHexString from 'src/core/objects/PDFHexString';
 import PDFContext from 'src/core/PDFContext';
 import PDFRef from 'src/core/objects/PDFRef';
 
-export interface EmbeddedFileOptions {
-  mimeType?: string;
-  description?: string;
-  creationDate?: Date;
-  modificationDate?: Date;
-  afRelationship: AFRelationship;
-}
+
 /** 
  * From the ZUGFeRD specification, Supplement-A, section **2.2.2. Data Relationship**.
  * See:
@@ -22,6 +16,15 @@ export enum AFRelationship {
   Alternative = 'Alternative',
   Supplement = 'Supplement',
   Unspecified = 'Unspecified'
+}
+
+
+export interface EmbeddedFileOptions {
+  mimeType?: string;
+  description?: string;
+  creationDate?: Date;
+  modificationDate?: Date;
+  afRelationship: AFRelationship;
 }
 
 

@@ -50,6 +50,7 @@ import { TransformationMatrix } from 'src/types/matrix';
 import {
   assertIs,
   assertOrUndefined,
+  assertIsOneOfOrUndefined,
   assertRange,
   Cache,
   canBeConvertedToUint8Array,
@@ -60,9 +61,11 @@ import {
   toUint8Array,
 } from 'src/utils';
 import FileEmbedder from 'src/core/embedders/FileEmbedder';
+import  {AFRelationship} from 'src/core/embedders/FileEmbedder';
 import PDFEmbeddedFile from 'src/api/PDFEmbeddedFile';
 import PDFJavaScript from 'src/api/PDFJavaScript';
 import JavaScriptEmbedder from 'src/core/embedders/JavaScriptEmbedder';
+import { import } from 'mixpanel';
 
 /**
  * Represents a PDF document.
@@ -820,7 +823,7 @@ export default class PDFDocument {
     assertOrUndefined(options.modificationDate, 'options.modificationDate', [
       Date,
     ]);
-    assertOrUndefined(options.afRelationship, 'options.afRelationship', AFRelationship);
+    assertIsOneOfOrUndefined(options.afRelationship, 'options.afRelationship', AFRelationship);
 
     const bytes = toUint8Array(attachment);
     const embedder = FileEmbedder.for(bytes, name, options);
