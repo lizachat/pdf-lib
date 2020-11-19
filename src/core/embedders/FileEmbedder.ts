@@ -2,15 +2,28 @@ import PDFString from 'src/core/objects/PDFString';
 import PDFHexString from 'src/core/objects/PDFHexString';
 import PDFContext from 'src/core/PDFContext';
 import PDFRef from 'src/core/objects/PDFRef';
-import {LiteralObject} from 'src/core/PDFContext'
 
 export interface EmbeddedFileOptions {
   mimeType?: string;
   description?: string;
   creationDate?: Date;
   modificationDate?: Date;
-  additionalParams?: LiteralObject;
+  afRelationship: AFRelationship;
 }
+/** 
+ * From the ZUGFeRD specification, Supplement-A, section **2.2.2. Data Relationship**.
+ * See:
+ * * https://www.ferd-net.de/standards/zugferd-versionsarchiv/zugferd-2.1.html
+ * * http://www.awv-net.de/updates/zugferd21/zugferd21en.zip
+ */
+export enum AFRelationship {
+  Data = 'Data',
+  Source = 'Source',
+  Alternative = 'Alternative',
+  Supplement = 'Supplement',
+  Unspecified = 'Unspecified'
+}
+
 
 class FileEmbedder {
   static for(
@@ -41,7 +54,6 @@ class FileEmbedder {
       description,
       creationDate,
       modificationDate,
-      additionalParams,
     } = this.options;
 
     const embeddedFileStream = context.flateStream(this.fileData, {
@@ -65,7 +77,7 @@ class FileEmbedder {
       UF: PDFHexString.fromText(this.fileName),
       EF: { F: embeddedFileStreamRef },
       Desc: description ? PDFHexString.fromText(description) : undefined,
-      ...additionalParams
+      AFRelationship: afRelationship ?? undefined,
     });
 
     if (ref) {

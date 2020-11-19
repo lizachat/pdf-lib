@@ -820,6 +820,7 @@ export default class PDFDocument {
     assertOrUndefined(options.modificationDate, 'options.modificationDate', [
       Date,
     ]);
+    assertOrUndefined(options.afRelationship, 'options.afRelationship', AFRelationship);
 
     const bytes = toUint8Array(attachment);
     const embedder = FileEmbedder.for(bytes, name, options);
