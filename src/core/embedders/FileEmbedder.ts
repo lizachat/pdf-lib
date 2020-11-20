@@ -24,7 +24,7 @@ export interface EmbeddedFileOptions {
   description?: string;
   creationDate?: Date;
   modificationDate?: Date;
-  afRelationship: AFRelationship;
+  afRelationship?: AFRelationship;
 }
 
 
@@ -80,7 +80,7 @@ class FileEmbedder {
       UF: PDFHexString.fromText(this.fileName),
       EF: { F: embeddedFileStreamRef },
       Desc: description ? PDFHexString.fromText(description) : undefined,
-      AFRelationship: afRelationship ?? undefined,
+      AFRelationship: AFRelationship ?? undefined,
     });
 
     if (ref) {

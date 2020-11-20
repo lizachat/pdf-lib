@@ -74,7 +74,7 @@ export default class PDFEmbeddedFile implements Embeddable {
         this.doc.catalog.set(PDFName.of('AF'), this.doc.context.obj([]));
       }
       const AF = this.doc.catalog.lookup(PDFName.of('AF'), PDFArray);
-      AF.push(ref)
+      AF.push(ref);
 
 
       this.alreadyEmbedded = true;
