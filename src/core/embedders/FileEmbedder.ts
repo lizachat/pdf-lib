@@ -57,7 +57,10 @@ class FileEmbedder {
       description,
       creationDate,
       modificationDate,
+      afRelationship,
     } = this.options;
+
+    console.log(' first');
 
     const embeddedFileStream = context.flateStream(this.fileData, {
       Type: 'EmbeddedFile',
@@ -72,17 +75,18 @@ class FileEmbedder {
           : undefined,
       },
     });
+    console.log(' second');
     const embeddedFileStreamRef = context.register(embeddedFileStream);
-
+    console.log(' third');
     const fileSpecDict = context.obj({
       Type: 'Filespec',
       F: PDFString.of(this.fileName), // TODO: Assert that this is plain ASCII
       UF: PDFHexString.fromText(this.fileName),
       EF: { F: embeddedFileStreamRef },
       Desc: description ? PDFHexString.fromText(description) : undefined,
-      AFRelationship: AFRelationship ?? undefined,
+      AFRelationship: afRelationship ?? AFRelationship.Alternative,
     });
-
+    console.log(' fourth', fileSpecDict);
     if (ref) {
       context.assign(ref, fileSpecDict);
       return ref;
