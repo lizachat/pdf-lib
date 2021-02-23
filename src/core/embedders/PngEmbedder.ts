@@ -39,6 +39,7 @@ class PngEmbedder {
       Height: this.image.height,
       ColorSpace: this.colorSpace,
       SMask,
+      Interpolate: false,
     });
 
     if (ref) {
@@ -60,6 +61,7 @@ class PngEmbedder {
       BitsPerComponent: this.image.bitsPerComponent,
       ColorSpace: 'DeviceGray',
       Decode: [0, 1],
+      Interpolate: false,
     });
 
     return context.register(xObject);
